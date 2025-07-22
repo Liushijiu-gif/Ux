@@ -1,0 +1,10 @@
+请将您的图片文件放在这个目录下
+
+建议的图片命名：
+- hero-image-1.jpg (主要头像)
+- hero-image-2.jpg (作品1)
+- hero-image-3.jpg (作品2)
+- profile-image.jpg (简历头像)
+- resume-image.jpg (简历背景)
+
+如果图片无法找到，网站会自动显示占位图标。 
