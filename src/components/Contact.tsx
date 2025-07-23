@@ -49,7 +49,7 @@ export function Contact() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {contactInfo.map((info, index) => (
-                <Card key={index} className="hover:shadow-md transition-shadow border border-gray-200">
+                <Card key={index} className="hover:shadow-md transition-shadow border border-gray-200 bg-white">
                   <CardContent className="p-6 text-center">
                     <div className="flex flex-col items-center space-y-4">
                       <div className="p-4 bg-blue-100 rounded-full">

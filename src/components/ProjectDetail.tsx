@@ -331,7 +331,7 @@ export function ProjectDetail({ project, onBack }: ProjectDetailProps) {
             <h2 className="text-3xl font-bold text-gray-900 mb-8">核心功能</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {project.keyFeatures.map((feature, index) => (
-                <Card key={index} className="p-6">
+                <Card key={index} className="p-6 border border-gray-200">
                   <CardContent className="p-0">
                     <div className="flex items-start space-x-4">
                       <div className="text-3xl">{feature.icon}</div>
@@ -357,7 +357,7 @@ export function ProjectDetail({ project, onBack }: ProjectDetailProps) {
             <h2 className="text-3xl font-bold text-gray-900 mb-8">成果与影响</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {project.results.map((result, index) => (
-                <Card key={index} className="text-center p-6">
+                <Card key={index} className="text-center p-6 border border-gray-200">
                   <CardContent className="p-0">
                     <div className="text-4xl font-bold text-blue-600 mb-2">
                       {result.value}
@@ -395,7 +395,7 @@ export function ProjectDetail({ project, onBack }: ProjectDetailProps) {
           <Button 
             onClick={onBack}
             variant="outline"
-            className="flex items-center border-gray-200 text-gray-700 hover:bg-gray-50"
+            className="flex items-center !border-gray-200 text-gray-700 hover:bg-gray-50"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             返回首页

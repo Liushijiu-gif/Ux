@@ -65,7 +65,7 @@ export function Skills() {
                         <span className="text-sm font-medium text-gray-700">{skill.name}</span>
                         <span className="text-sm text-gray-500">{skill.level}%</span>
                       </div>
-                      <Progress value={skill.level} className="h-2" />
+                      <Progress value={skill.level} className="h-2 bg-gray-200" />
                     </div>
                   ))}
                 </div>

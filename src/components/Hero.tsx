@@ -53,7 +53,7 @@ export function Hero({ onResumeClick }: HeroProps) {
                 onClick={onResumeClick}
                 variant="outline" 
                 size="lg"
-                className="border-gray-200 text-gray-700 hover:border-gray-400 hover:text-gray-800 hover:bg-gray-50"
+                className="!border-gray-200 bg-white text-gray-700 hover:bg-gray-100 hover:!border-gray-300 hover:text-gray-800"
               >
                 <User className="mr-2 h-5 w-5" />
                 查看我的简历

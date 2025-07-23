@@ -48,7 +48,7 @@ export function Portfolio({ projects, onProjectClick }: PortfolioProps) {
               onClick={() => setSelectedCategory(category)}
               className={selectedCategory === category 
                 ? 'bg-blue-600 hover:bg-blue-700 text-white' 
-                : 'border-gray-200 hover:border-gray-400 hover:text-gray-800'
+                : '!border-gray-200 bg-white hover:bg-blue-50 hover:!border-blue-200 hover:text-blue-600'
               }
             >
               {category}
@@ -61,7 +61,7 @@ export function Portfolio({ projects, onProjectClick }: PortfolioProps) {
           {filteredProjects.map((project) => (
             <Card 
               key={project.id} 
-              className="group hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer border border-gray-200"
+              className="group hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer border border-gray-200 bg-white"
               onClick={() => onProjectClick(project.id)}
             >
               <div className="relative overflow-hidden">
@@ -88,7 +88,7 @@ export function Portfolio({ projects, onProjectClick }: PortfolioProps) {
                   
                   <div className="flex flex-wrap gap-2">
                     {project.tags.slice(0, 3).map((tag, index) => (
-                      <Badge key={index} variant="secondary" className="text-xs">
+                      <Badge key={index} variant="secondary" className="text-xs bg-gray-100 text-gray-700">
                         {tag}
                       </Badge>
                     ))}
