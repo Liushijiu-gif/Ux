@@ -6,6 +6,11 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'inter': ['Inter', 'sans-serif'],
+        'space-grotesk': ['Space Grotesk', 'sans-serif'],
+        'futura': ['Futura', 'Nunito Sans', 'Avenir Next', 'Avenir', 'sans-serif'],
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

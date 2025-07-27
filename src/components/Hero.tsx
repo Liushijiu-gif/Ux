@@ -1,9 +1,94 @@
 import { ArrowRight, User } from 'lucide-react';
 import { Button } from './ui/button';
-import Particles from './Particles';
+import { useState, useEffect } from 'react';
 
 interface HeroProps {
   onResumeClick: () => void;
+}
+
+// 打字机效果组件
+function TypewriterText({ 
+  text, 
+  delay = 0, 
+  speed = 50, 
+  className = "",
+  showCursor = true 
+}: { 
+  text: string; 
+  delay?: number; 
+  speed?: number; 
+  className?: string;
+  showCursor?: boolean;
+}) {
+  const [displayText, setDisplayText] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [delay]);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    setIsTyping(true);
+    let currentIndex = 0;
+    const interval = setInterval(() => {
+      if (currentIndex <= text.length) {
+        setDisplayText(text.slice(0, currentIndex));
+        currentIndex++;
+      } else {
+        setIsTyping(false);
+        clearInterval(interval);
+      }
+    }, speed);
+
+    return () => clearInterval(interval);
+  }, [text, speed, isVisible]);
+
+  return (
+    <span className={className}>
+      {displayText}
+      {showCursor && isTyping && (
+        <span className="animate-pulse text-blue-500">|</span>
+      )}
+    </span>
+  );
+}
+
+// 淡入动画组件
+function FadeInElement({ 
+  children, 
+  delay = 0, 
+  className = "" 
+}: { 
+  children: React.ReactNode; 
+  delay?: number; 
+  className?: string; 
+}) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [delay]);
+
+  return (
+    <div 
+      className={`transition-all duration-1000 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+      } ${className}`}
+    >
+      {children}
+    </div>
+  );
 }
 
 export function Hero({ onResumeClick }: HeroProps) {
@@ -17,34 +102,68 @@ export function Hero({ onResumeClick }: HeroProps) {
   return (
     <section 
       id="home" 
-      className="pt-16 relative h-[80vh] flex items-center justify-center overflow-hidden bg-blue-100"
+      className="pt-16 relative h-[900px] flex items-center justify-start overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100"
     >
-      {/* Particles Background */}
-      <div className="absolute inset-0 z-0">
-        <Particles
-          particleCount={60}
-          particleColor="#3b82f6"
-          connectionColor="#60a5fa"
-          maxDistance={400}
-          speed={0.8}
-        />
-      </div>
       
       {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Content */}
-        <div className="mb-12">
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-6 leading-tight">
-            <span className="text-blue-600">Hello，I'm</span>
+        <div className="mb-24">
+          {/* 第一模块：小字欢迎语 */}
+          <FadeInElement delay={2600}>
+            <p className="text-lg text-gray-500 mb-6 font-futura">
+              欢迎来到我的个人网站！
+            </p>
+          </FadeInElement>
+          
+          {/* 标签模块 */}
+          <div className="flex flex-wrap gap-3 mb-24">
+            <FadeInElement delay={3100}>
+              <span className="px-3 py-1 border border-gray-500 text-gray-500 rounded text-sm font-medium font-futura">
+                AI TOOLS
+              </span>
+            </FadeInElement>
+            <FadeInElement delay={3200}>
+              <span className="px-3 py-1 border border-gray-500 text-gray-500 rounded text-sm font-medium font-futura">
+                LOW CODE
+              </span>
+            </FadeInElement>
+            <FadeInElement delay={3300}>
+              <span className="px-3 py-1 border border-gray-500 text-gray-500 rounded text-sm font-medium font-futura">
+                UI\UX
+              </span>
+            </FadeInElement>
+            <FadeInElement delay={3400}>
+              <span className="px-3 py-1 border border-gray-500 text-gray-500 rounded text-sm font-medium font-futura">
+                DESIGN SYSTEM
+              </span>
+            </FadeInElement>
+          </div>
+          
+          {/* 第二模块：大字自我介绍 */}
+          <h1 className="text-7xl md:text-8xl text-gray-800 mb-4 leading-[1.5] font-futura">
+            <span className="text-blue-600 font-black">
+              <TypewriterText 
+                text="JiaLing's Design Portfolio" 
+                delay={300} 
+                speed={120}
+              />
+            </span>
             <br />
-            <span className="text-gray-900">刘家铃</span>
+            <span className="text-gray-900 font-black text-6xl md:text-5xl">
+              <TypewriterText 
+                text="Creating natural designs" 
+                delay={2000} 
+                speed={100}
+              />
+            </span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-700 mb-8">
-          </p>
+          
+
         </div>
 
-        {/* Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        {/* 第四模块：按钮 */}
+        <FadeInElement delay={3700} className="flex flex-col sm:flex-row gap-4">
           <Button 
             onClick={onResumeClick}
             variant="outline" 
@@ -59,10 +178,10 @@ export function Hero({ onResumeClick }: HeroProps) {
             size="lg" 
             className="bg-blue-600 hover:bg-blue-700 text-white"
           >
+            <ArrowRight className="mr-2 h-5 w-5" />
             查看我的作品
-            <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
-        </div>
+        </FadeInElement>
       </div>
     </section>
   );
