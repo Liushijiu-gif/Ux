@@ -9,8 +9,7 @@ export const projectCoverImages = {
   sigma: '/images/projects/covers/sigma-system.png',
   bedrockDesign: '/images/projects/covers/bedrock-design-system.png',
   bedrockIcon: '/images/projects/covers/bedrock-icon-library.png',
-  modeling3D: '/images/projects/covers/3D.png',
-  aigc: '/images/projects/covers/AIGC.png',
+  neteaseOa: '/images/projects/covers/netease-oa-optimization.png',
   aiWebsite: '/images/projects/covers/AI-staf-web.png',
   promoteCollector: '/images/projects/covers/Promote.png'
 };
@@ -89,15 +88,40 @@ export const sigmaProjectImages = {
   onboardingGuide: '/images/projects/sigma/onboardingGuide.png',
 };
 
-// Bedrock图标库项目详情图片（暂保留占位符，因为bedrock目录为空）
+// Bedrock设计中台项目详情图片
+export const bedrockDesignImages = {
+  componentIteration: '/images/projects/bedrock-design/component-iteration.png',
+  businessComponents: '/images/projects/bedrock-design/business-components.png',
+  experienceReview: '/images/projects/bedrock-design/experience-review.png',
+  richtextEditor: '/images/projects/bedrock-design/richtext-editor.png',
+  overview: '/images/projects/bedrock-design/overview.png',
+};
+
+// Bedrock图标库项目详情图片
 export const bedrockIconImages = {
-  standardsAndGuidelines: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=800&h=600&fit=crop&q=80',
-  identifiabilityPrinciple: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=600&fit=crop&q=80',
-  styleCharacteristics: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&q=80',
-  sizeConsistency: 'https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=800&h=600&fit=crop&q=80',
-  proportionConsistency: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&h=600&fit=crop&q=80',
-  cornerRadiusConsistency: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=800&h=600&fit=crop&q=80',
-  strokeWeightConsistency: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=600&fit=crop&q=80',
-  densitySpacingConsistency: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&q=80',
-  iconDrawingSOP: 'https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=800&h=600&fit=crop&q=80',
+  standardsAndGuidelines: '/images/projects/bedrock-icon/standards-guidelines.png',
+  identifiabilityPrinciple: '/images/projects/bedrock-icon/identifiability-principle.png',
+  styleCharacteristics: '/images/projects/bedrock-icon/style-characteristics.png',
+  sizeConsistency: '/images/projects/bedrock-icon/size-consistency.png',
+  proportionConsistency: '/images/projects/bedrock-icon/proportion-consistency.png',
+  cornerRadiusConsistency: '/images/projects/bedrock-icon/corner-radius-consistency.png',
+  strokeWeightConsistency: '/images/projects/bedrock-icon/stroke-weight-consistency.png',
+  densitySpacingConsistency: '/images/projects/bedrock-icon/density-spacing-consistency.png',
+  iconDrawingSOP: '/images/projects/bedrock-icon/icon-drawing-sop.png',
+};
+
+
+
+// 网易OA系统AI助手体验优化项目图片集合
+export const neteaseOaImages = {
+  image1: '/images/projects/netease-oa/01.png',
+  image2: '/images/projects/netease-oa/02.png',
+  image3: '/images/projects/netease-oa/03.png',
+  image4: '/images/projects/netease-oa/04.png',
+  image5: '/images/projects/netease-oa/05.png',
+  image6: '/images/projects/netease-oa/06.png',
+  image7: '/images/projects/netease-oa/07.png',
+  image8: '/images/projects/netease-oa/08.png',
+  image9: '/images/projects/netease-oa/09.png',
+  image10: '/images/projects/netease-oa/10.png',
 };

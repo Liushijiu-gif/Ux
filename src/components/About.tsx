@@ -4,7 +4,7 @@ import { Card, CardContent } from './ui/card';
 
 export function About() {
   const stats = [
-    { icon: Award, value: '15+', label: '完成项目数' },
+    { icon: Award, value: '20+', label: '完成项目数' },
     { icon: Palette, value: '1800+', label: '绘制icon数' },
     { icon: Coffee, value: '100+', label: '喝咖啡杯数' },
     { icon: Heart, value: '100%', label: '设计热情' },
@@ -13,22 +13,20 @@ export function About() {
   return (
     <section id="about" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <div className="text-left mb-16">
+          {/* 指示器线条 */}
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+            <span className="text-sm text-gray-500">01 — About</span>
+          </div>
+          {/* 主标题 */}
+          <h2 className="text-5xl md:text-6xl font-bold text-gray-900">
             关于我
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            我是一名充满好奇心和热情的用户体验设计师，致力于创造以用户为中心的解决方案，
-            探索并发现更多有意思的事物。
-          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
           <div className="space-y-6">
-            <p className="text-gray-700 leading-relaxed">
-              毕业于广州美术学院，拥有4年的用户体验设计经验，从2022年起在网易工作至今。
-              我的设计方法结合了用户研究、数据驱动的洞察和创意解决。
-            </p>
             
             <p className="text-gray-700 leading-relaxed">
               我认为，优秀的B端设计应当自然且直观。它需要将复杂的业务逻辑拆解为用户易于理解的概念和步骤。为此，设计师必须深入理解用户需求、业务目标和业务限制，才能创造出既美观又实用的界面。
@@ -59,18 +57,23 @@ export function About() {
           
           <div className="grid grid-cols-2 gap-6">
             {stats.map((stat, index) => (
-              <Card key={index} className="text-center p-6 hover:shadow-lg transition-shadow border border-gray-200">
-                <CardContent className="space-y-4">
-                  <div className="flex justify-center">
-                    <div className="p-3 bg-blue-100 rounded-full">
-                      <stat.icon className="h-6 w-6 text-blue-600" />
-                    </div>
+              <Card key={index} className="relative overflow-hidden p-6 hover:shadow-lg transition-shadow shadow-sm min-h-[140px]">
+                <CardContent className="relative z-10 h-full flex flex-col justify-between p-0">
+                  {/* 数值 - 左上角 */}
+                  <div className="text-left">
+                    <div className="text-5xl font-bold text-gray-900">{stat.value}</div>
                   </div>
-                  <div>
-                    <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
-                    <div className="text-sm text-gray-600">{stat.label}</div>
+                  
+                  {/* 标签 - 右下角 */}
+                  <div className="text-right">
+                    <div className="text-sm text-gray-600 leading-tight">{stat.label}</div>
                   </div>
                 </CardContent>
+                
+                {/* 背景图标 - 底部，只露出上半部分 */}
+                <div className="absolute -bottom-10 -right-10 opacity-10">
+                  <stat.icon className="h-36 w-36 text-gray-400" />
+                </div>
               </Card>
             ))}
           </div>

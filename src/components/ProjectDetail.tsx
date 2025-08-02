@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowLeft, ExternalLink, Calendar, User, Building } from 'lucide-react';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Card, CardContent } from './ui/card';
+import { ImageViewer } from './ImageViewer';
 
 interface ProjectDetailProps {
   project: {
@@ -148,17 +149,43 @@ function formatTextWithParagraphs(text: string): string[] {
 }
 
 export function ProjectDetail({ project, onBack }: ProjectDetailProps) {
+  // 图片查看器状态
+  const [imageViewerOpen, setImageViewerOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [viewerImages, setViewerImages] = useState<string[]>([]);
+
   // 核心项目：只保留图片集合、成果与影响、下一步计划
-  const isCoreProject = [1, 2, 3, 4].includes(project.id);
+  const isCoreProject = [1, 2, 3, 4, 9].includes(project.id);
   
   // 完整内容项目：丰富的项目描述，不展示图片合集
-  const isFullContentProject = [5, 6, 9, 10].includes(project.id);
+  const isFullContentProject = [5, 6].includes(project.id);
   
   // 图片集合项目：显示图片合集、成果与影响、下一步计划，但不显示详细文字内容
-  const isGalleryProject = [7, 8].includes(project.id);
+  const isGalleryProject = false;
 
-  // 纯图片展示项目：只显示图片合集，不显示成果与影响和下一步计划
-  const isGalleryOnlyProject = [7, 8].includes(project.id);
+
+
+  // 图片查看器处理函数
+  const handleImageClick = (imageSrc: string, allImages: string[] = [imageSrc], clickedIndex: number = 0) => {
+    // 过滤掉空图片路径
+    const validImages = allImages.filter(img => img && img.trim() !== '');
+    if (validImages.length === 0) return;
+    
+    // 找到点击图片在有效图片数组中的索引
+    const validIndex = validImages.findIndex(img => img === imageSrc);
+    
+    setViewerImages(validImages);
+    setCurrentImageIndex(validIndex >= 0 ? validIndex : 0);
+    setImageViewerOpen(true);
+  };
+
+  const handleCloseImageViewer = () => {
+    setImageViewerOpen(false);
+  };
+
+  const handleImageIndexChange = (index: number) => {
+    setCurrentImageIndex(index);
+  };
 
   // 获取分段后的文本
   const overviewParagraphs = formatTextWithParagraphs(project.overview);
@@ -194,7 +221,7 @@ export function ProjectDetail({ project, onBack }: ProjectDetailProps) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="mb-4">
-                <Badge variant="secondary" className="mb-2">
+                <Badge variant="secondary" className="mb-2 bg-gray-200 text-gray-700 hover:bg-gray-300">
                   {project.category}
                 </Badge>
                 <h1 className="text-4xl font-bold text-gray-900 mb-6">
@@ -234,7 +261,8 @@ export function ProjectDetail({ project, onBack }: ProjectDetailProps) {
               <img
                 src={project.image}
                 alt={project.title}
-                className="w-full h-auto rounded-lg shadow-lg"
+                className="w-full h-auto rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+                onClick={() => handleImageClick(project.image)}
               />
             </div>
           </div>
@@ -261,12 +289,13 @@ export function ProjectDetail({ project, onBack }: ProjectDetailProps) {
       {(isCoreProject || isGalleryProject) && project.gallery && project.gallery.length > 0 && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-16">
           <div className="space-y-12">
-            {project.gallery.map((image, index) => (
+            {project.gallery.filter(image => image).map((image, index) => (
               <div key={index} className="w-full">
                 <img
                   src={image}
                   alt={`${project.title} - 图片 ${index + 1}`}
-                  className="w-full h-auto rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                  className="w-full h-auto rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+                  onClick={() => handleImageClick(image, project.gallery, index)}
                 />
               </div>
             ))}
@@ -311,14 +340,23 @@ export function ProjectDetail({ project, onBack }: ProjectDetailProps) {
                       {step.description}
                     </p>
                   </div>
-                  {/* 图片在下 */}
-                  <div className="w-full">
-                    <img
-                      src={step.image}
-                      alt={step.title}
-                      className="w-full h-auto rounded-lg shadow-md"
-                    />
-                  </div>
+                  {/* 图片在下 - 只在有图片路径时显示 */}
+                  {step.image && (
+                    <div className="w-full">
+                      <img
+                        src={step.image}
+                        alt={step.title}
+                        className="w-full h-auto rounded-3xl shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
+                        onClick={() => {
+                          // 收集所有流程步骤中的有效图片
+                          const stepImages = project.processSteps
+                            .map(s => s.image)
+                            .filter(img => img && img.trim() !== '');
+                          handleImageClick(step.image, stepImages);
+                        }}
+                      />
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -331,9 +369,9 @@ export function ProjectDetail({ project, onBack }: ProjectDetailProps) {
             <h2 className="text-3xl font-bold text-gray-900 mb-8">核心功能</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {project.keyFeatures.map((feature, index) => (
-                <Card key={index} className="p-6 border border-gray-200">
-                  <CardContent className="p-0">
-                    <div className="flex items-start space-x-4">
+                <Card key={index} className="shadow-sm hover:shadow-md">
+                  <CardContent className="p-6 flex items-center h-full">
+                    <div className="flex items-start space-x-4 w-full">
                       <div className="text-3xl">{feature.icon}</div>
                       <div>
                         <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -351,14 +389,14 @@ export function ProjectDetail({ project, onBack }: ProjectDetailProps) {
           </section>
         )}
 
-        {/* Results - 对核心项目和完整内容项目显示，但排除纯图片展示项目 */}
-        {(isCoreProject || isFullContentProject) && !isGalleryOnlyProject && project.results.length > 0 && (
+        {/* Results - 对核心项目和完整内容项目显示 */}
+        {(isCoreProject || isFullContentProject) && project.results.length > 0 && (
           <section className="mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-8">成果与影响</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {project.results.map((result, index) => (
-                <Card key={index} className="text-center p-6 border border-gray-200">
-                  <CardContent className="p-0">
+                <Card key={index} className="text-center shadow-sm hover:shadow-md">
+                  <CardContent className="p-6 flex flex-col justify-center items-center h-full">
                     <div className="text-4xl font-bold text-blue-600 mb-2">
                       {result.value}
                     </div>
@@ -375,8 +413,8 @@ export function ProjectDetail({ project, onBack }: ProjectDetailProps) {
           </section>
         )}
 
-        {/* Next Steps - 对核心项目和完整内容项目显示，但排除纯图片展示项目 */}
-        {(isCoreProject || isFullContentProject) && !isGalleryOnlyProject && project.nextSteps.length > 0 && (
+        {/* Next Steps - 对核心项目和完整内容项目显示 */}
+        {(isCoreProject || isFullContentProject) && project.nextSteps.length > 0 && (
           <section className="mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-8">下一步计划</h2>
             <ul className="space-y-3">
@@ -421,6 +459,15 @@ export function ProjectDetail({ project, onBack }: ProjectDetailProps) {
           )}
         </div>
       </div>
+
+      {/* 图片查看器 */}
+      <ImageViewer
+        images={viewerImages}
+        currentIndex={currentImageIndex}
+        isOpen={imageViewerOpen}
+        onClose={handleCloseImageViewer}
+        onIndexChange={handleImageIndexChange}
+      />
     </div>
   );
 }
