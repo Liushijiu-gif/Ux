@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ExternalLink, Calendar, User, Building } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Calendar, User, Building, Mail, Phone, MessageCircle, MapPin, Check } from 'lucide-react';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Card, CardContent } from './ui/card';
 import { ImageViewer } from './ImageViewer';
+import { projectsData } from '../data/projects';
 
 interface ProjectDetailProps {
   project: {
@@ -43,6 +44,7 @@ interface ProjectDetailProps {
     gallery?: string[];
   };
   onBack: () => void;
+  onProjectClick?: (projectId: number) => void;
 }
 
 // 增强的文本分段函数
@@ -148,17 +150,33 @@ function formatTextWithParagraphs(text: string): string[] {
   return paragraphs.length > 0 ? paragraphs : [text];
 }
 
-export function ProjectDetail({ project, onBack }: ProjectDetailProps) {
+
+
+export function ProjectDetail({ project, onBack, onProjectClick }: ProjectDetailProps) {
   // 图片查看器状态
   const [imageViewerOpen, setImageViewerOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [viewerImages, setViewerImages] = useState<string[]>([]);
+  
+  // 复制状态
+  const [copiedItem, setCopiedItem] = useState<string | null>(null);
+
+  // 复制到剪贴板函数
+  const copyToClipboard = async (text: string, itemName: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedItem(itemName);
+      setTimeout(() => setCopiedItem(null), 2000); // 2秒后清除状态
+    } catch (err) {
+      console.error('复制失败:', err);
+    }
+  };
 
   // 核心项目：只保留图片集合、成果与影响、下一步计划
   const isCoreProject = [1, 2, 3, 4, 9].includes(project.id);
   
   // 完整内容项目：丰富的项目描述，不展示图片合集
-  const isFullContentProject = [5, 6].includes(project.id);
+  const isFullContentProject = [5, 6, 7, 8].includes(project.id);
   
   // 图片集合项目：显示图片合集、成果与影响、下一步计划，但不显示详细文字内容
   const isGalleryProject = false;
@@ -372,7 +390,9 @@ export function ProjectDetail({ project, onBack }: ProjectDetailProps) {
                 <Card key={index} className="shadow-sm hover:shadow-md">
                   <CardContent className="p-6 flex items-center h-full">
                     <div className="flex items-start space-x-4 w-full">
-                      <div className="text-3xl">{feature.icon}</div>
+                      <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-2xl">
+                        {feature.icon}
+                      </div>
                       <div>
                         <h3 className="text-lg font-semibold text-gray-900 mb-2">
                           {feature.title}
@@ -428,16 +448,10 @@ export function ProjectDetail({ project, onBack }: ProjectDetailProps) {
           </section>
         )}
 
-        {/* Action Buttons - 减少返回按钮和分隔线间距 */}
-        <div className="flex flex-wrap gap-4 pt-2 border-t">
-          <Button 
-            onClick={onBack}
-            variant="outline"
-            className="flex items-center !border-gray-200 text-gray-700 hover:bg-gray-50"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            返回首页
-          </Button>
+
+
+        {/* Action Buttons - 只保留项目相关按钮 */}
+        <div className="flex flex-wrap gap-4 pt-2">
           {project.liveUrl !== '#' && (
             <Button
               onClick={() => window.open(project.liveUrl, '_blank')}
@@ -459,6 +473,101 @@ export function ProjectDetail({ project, onBack }: ProjectDetailProps) {
           )}
         </div>
       </div>
+
+
+
+      {/* Let's 一起工作！模块 */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            {/* 主标题 */}
+            <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
+              Let's 一起工作！
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              我随时欢迎聊聊新的机会和有趣的项目。
+              让我们一起创造出色的作品吧！
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card 
+              className="hover:shadow-md transition-shadow shadow-sm bg-white border border-gray-200 cursor-pointer"
+              onClick={() => copyToClipboard('332581402@qq.com', 'email')}
+            >
+              <CardContent className="p-8">
+                <div className="flex flex-col">
+                  <div className="w-16 h-16 flex items-start justify-start mb-4">
+                    <Mail className="h-8 w-8 text-blue-600" />
+                  </div>
+                  <h4 className="text-xl font-bold text-gray-900 mb-3">邮箱联系</h4>
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-600">
+                      332581402@qq.com
+                    </span>
+                    {copiedItem === 'email' && (
+                      <div className="flex items-center gap-1 text-green-600 text-sm">
+                        <Check className="h-4 w-4" />
+                        <span>已复制</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card 
+              className="hover:shadow-md transition-shadow shadow-sm bg-white border border-gray-200 cursor-pointer"
+              onClick={() => copyToClipboard('13418034440', 'phone')}
+            >
+              <CardContent className="p-8">
+                <div className="flex flex-col">
+                  <div className="w-16 h-16 flex items-start justify-start mb-4">
+                    <Phone className="h-8 w-8 text-blue-600" />
+                  </div>
+                  <h4 className="text-xl font-bold text-gray-900 mb-3">电话联系</h4>
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-600">
+                      13418034440
+                    </span>
+                    {copiedItem === 'phone' && (
+                      <div className="flex items-center gap-1 text-green-600 text-sm">
+                        <Check className="h-4 w-4" />
+                        <span>已复制</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card 
+              className="hover:shadow-md transition-shadow shadow-sm bg-white border border-gray-200 cursor-pointer"
+              onClick={() => copyToClipboard('Llzzz73', 'wechat')}
+            >
+              <CardContent className="p-8">
+                <div className="flex flex-col">
+                  <div className="w-16 h-16 flex items-start justify-start mb-4">
+                    <MessageCircle className="h-8 w-8 text-blue-600" />
+                  </div>
+                  <h4 className="text-xl font-bold text-gray-900 mb-3">微信联系</h4>
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-600">
+                      Llzzz73
+                    </span>
+                    {copiedItem === 'wechat' && (
+                      <div className="flex items-center gap-1 text-green-600 text-sm">
+                        <Check className="h-4 w-4" />
+                        <span>已复制</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
 
       {/* 图片查看器 */}
       <ImageViewer

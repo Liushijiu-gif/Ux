@@ -100,7 +100,7 @@ export function Resume({ onBack }: ResumeProps) {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Personal Info */}
-        <Card className="mb-8 shadow-sm hover:shadow-md">
+        <Card className="mb-8 border-2 border-gray-200">
           <CardContent className="p-8">
             <div className="flex flex-col md:flex-row gap-8 items-start">
               <div className="flex-1">
@@ -243,22 +243,9 @@ export function Resume({ onBack }: ResumeProps) {
             </div>
           </CardContent>
         </Card>
-
-
-
-        {/* Back Button */}
-        <div className="text-center">
-          <Button
-            onClick={onBack}
-            variant="outline"
-            size="lg"
-            className="border-gray-200 text-gray-700 hover:bg-gray-50"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            返回首页
-          </Button>
-        </div>
       </div>
+
+
     </div>
   );
 }

@@ -96,8 +96,16 @@ export function Hero({ onResumeClick }: HeroProps) {
   return (
     <section 
       id="home" 
-      className="pt-16 pb-[84px] relative flex items-center justify-center overflow-hidden bg-gray-100"
+      className="pt-20 pb-[104px] relative flex items-center justify-center overflow-hidden bg-gray-100"
     >
+      {/* 弥散光圆形背景 */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* 左侧弥散光 - 只露出半个圆形 */}
+        <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-[calc(100vh-208px)] h-[calc(100vh-208px)] bg-blue-200 rounded-full opacity-35 blur-3xl animate-float-slow -translate-x-1/2"></div>
+        
+        {/* 右侧弥散光 - 只露出半个圆形 */}
+        <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-[calc(100vh-208px)] h-[calc(100vh-208px)] bg-purple-200 rounded-full opacity-30 blur-3xl animate-float-medium translate-x-1/2"></div>
+      </div>
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="text-center">
           {/* Year Badge */}
@@ -130,7 +138,7 @@ export function Hero({ onResumeClick }: HeroProps) {
                     alt="工作场景" 
                     className="hidden sm:inline h-[1em] w-[1.5em] object-cover rounded-full shadow-sm mx-3" 
                   />
-                  <span className="ml-3 sm:ml-0">Natural Experiences</span>
+                  <span className="ml-3 sm:ml-0">Natural Interactions</span>
                 </span>
               </div>
             </FadeInElement>
@@ -143,7 +151,7 @@ export function Hero({ onResumeClick }: HeroProps) {
                     alt="专业图片" 
                     className="hidden sm:inline h-[1em] w-[1.5em] object-cover rounded-full shadow-md mr-2" 
                   />
-                  <span>Real users<span className="text-blue-600 font-medium">.</span></span>
+                  <span>Real Users<span className="text-blue-600 font-medium">.</span></span>
                 </span>
               </div>
             </FadeInElement>

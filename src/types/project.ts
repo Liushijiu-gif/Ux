@@ -12,7 +12,7 @@ export interface ProjectSummary {
 export interface ProcessStep {
   title: string;
   description: string;
-  image: string;
+  image: string | null;
 }
 
 export interface KeyFeature {

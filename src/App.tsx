@@ -93,7 +93,11 @@ export default function App() {
     if (project) {
       return (
         <>
-          <ProjectDetail project={project} onBack={handleBackToMain} />
+          <ProjectDetail 
+            project={project} 
+            onBack={handleBackToMain} 
+            onProjectClick={handleProjectClick}
+          />
           <BackToTop />
         </>
       );

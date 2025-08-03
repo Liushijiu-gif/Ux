@@ -125,3 +125,19 @@ export const neteaseOaImages = {
   image9: '/images/projects/netease-oa/09.png',
   image10: '/images/projects/netease-oa/10.png',
 };
+
+// AI作品集网站项目详情图片
+export const aiWebsiteImages = {
+  designStart: '/images/projects/ai-website/designStart.png',
+  detailAdjustment: '/images/projects/ai-website/detailAdjustment.png',
+  imageUpload: '/images/projects/ai-website/image-upload.png',
+  publishAndPromotion: '/images/projects/ai-website/publishAndPromotion.png',
+  rollbackAndFix: '/images/projects/ai-website/rollbackAndFix.png',
+};
+
+// Promote收集器项目详情图片
+export const promoteCollectorImages = {
+  uiDesign: '/images/projects/promote-collector/ui-design.png',
+  interactionFlow: '/images/projects/promote-collector/interaction-flow.png',
+  frontendImplementation: '/images/projects/promote-collector/frontend-implementation.png',
+};
