@@ -75,32 +75,11 @@ export function Footer() {
         </ScrollAnimation>
 
         {/* 底部区域 */}
-        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+        <div className="flex justify-center">
           {/* 版权信息 */}
-          <ScrollAnimation stagger={200} staggerIndex={3}>
-            <p className="text-gray-400 text-sm">
-              © {currentYear} 刘家铃。保留所有权利。
-            </p>
-          </ScrollAnimation>
-
-          {/* 社交媒体链接 */}
-          <ScrollAnimation stagger={200} staggerIndex={4}>
-            <div className="flex space-x-4">
-              {socialLinks.map((social, index) => (
-                <ScrollAnimation key={social.label} stagger={100} staggerIndex={5 + index}>
-                  <a
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`text-gray-400 transition-colors ${social.color}`}
-                    aria-label={social.label}
-                  >
-                    <social.icon className="h-5 w-5" />
-                  </a>
-                </ScrollAnimation>
-              ))}
-            </div>
-          </ScrollAnimation>
+          <p className="text-gray-400 text-sm">
+            © {currentYear} 刘家铃. 保留所有权利. | 版权所有
+          </p>
         </div>
       </div>
     </footer>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navigation } from './components/Navigation';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
@@ -19,11 +19,52 @@ export default function App() {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
   const [savedScrollPosition, setSavedScrollPosition] = useState<number>(0);
 
+  // 从URL参数初始化状态
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const view = urlParams.get('view');
+    const projectId = urlParams.get('projectId');
+    
+    if (view === 'project' && projectId) {
+      const projectIdNum = parseInt(projectId);
+      if (projectDetails[projectIdNum as keyof typeof projectDetails]) {
+        setCurrentView('project');
+        setSelectedProject(projectIdNum);
+        return;
+      }
+    } else if (view === 'resume') {
+      setCurrentView('resume');
+      return;
+    } else if (view === 'admin') {
+      setCurrentView('admin');
+      return;
+    }
+    
+    // 默认显示主页
+    setCurrentView('main');
+    setSelectedProject(null);
+  }, []);
+
+  // 更新URL参数
+  const updateURL = (view: string, projectId?: number) => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('view', view);
+    
+    if (projectId !== undefined) {
+      url.searchParams.set('projectId', projectId.toString());
+    } else {
+      url.searchParams.delete('projectId');
+    }
+    
+    window.history.replaceState({}, '', url.toString());
+  };
+
   // 处理项目点击
   const handleProjectClick = (projectId: number) => {
     setSavedScrollPosition(window.scrollY);
     setSelectedProject(projectId);
     setCurrentView('project');
+    updateURL('project', projectId);
     window.scrollTo(0, 0);
   };
 
@@ -31,6 +72,7 @@ export default function App() {
   const handleResumeClick = () => {
     setSavedScrollPosition(window.scrollY);
     setCurrentView('resume');
+    updateURL('resume');
     window.scrollTo(0, 0);
   };
 
@@ -38,6 +80,7 @@ export default function App() {
   const handleAdminClick = () => {
     setSavedScrollPosition(window.scrollY);
     setCurrentView('admin');
+    updateURL('admin');
     window.scrollTo(0, 0);
   };
 
@@ -45,6 +88,7 @@ export default function App() {
   const handleBackToMain = () => {
     setCurrentView('main');
     setSelectedProject(null);
+    updateURL('main');
     setTimeout(() => {
       window.scrollTo(0, savedScrollPosition);
     }, 100);

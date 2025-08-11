@@ -85,12 +85,12 @@ export function Resume({ onBack }: ResumeProps) {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="bg-gray-50 border-b sticky top-0 z-50">
+      <div className="bg-white/20 backdrop-blur-md border-b border-white/20 sticky top-0 z-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <Button
             variant="ghost"
             onClick={onBack}
-            className="hover:bg-gray-100"
+            className="hover:bg-white/20 text-gray-800"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             返回首页

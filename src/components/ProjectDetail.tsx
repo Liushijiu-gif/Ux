@@ -25,7 +25,7 @@ interface ProjectDetailProps {
     processSteps: Array<{
       title: string;
       description: string;
-      image: string;
+      image: string | null;
     }>;
     keyFeatures: Array<{
       title: string;
@@ -160,6 +160,9 @@ export function ProjectDetail({ project, onBack, onProjectClick }: ProjectDetail
   
   // 复制状态
   const [copiedItem, setCopiedItem] = useState<string | null>(null);
+  
+  // 滚动状态
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // 复制到剪贴板函数
   const copyToClipboard = async (text: string, itemName: string) => {
@@ -209,16 +212,51 @@ export function ProjectDetail({ project, onBack, onProjectClick }: ProjectDetail
   const overviewParagraphs = formatTextWithParagraphs(project.overview);
   const challengeParagraphs = formatTextWithParagraphs(project.challenge);
 
+  // 监听滚动事件
+  React.useEffect(() => {
+    let ticking = false;
+    
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollTop = window.scrollY;
+          const newIsScrolled = scrollTop > 0;
+          // 只有当状态真正改变时才更新，避免不必要的重渲染
+          if (newIsScrolled !== isScrolled) {
+            setIsScrolled(newIsScrolled);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    // 初始化时检查一次滚动位置
+    const scrollTop = window.scrollY;
+    setIsScrolled(scrollTop > 0);
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isScrolled]);
+
   return (
     <div className="min-h-screen bg-white">
-      {/* Header - 减少返回按钮和分隔线间距 */}
-      <div className="bg-gray-50 border-b sticky top-0 z-50">
+      {/* Header - 动态背景效果 */}
+      <div className={`sticky top-0 z-50 transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-white/20 backdrop-blur-md border-b border-white/20' 
+          : 'bg-gray-50 border-b border-gray-200'
+      }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center space-x-3">
             <Button
               variant="ghost"
               onClick={onBack}
-              className="hover:bg-gray-100"
+              className={`transition-colors ${
+                isScrolled 
+                  ? 'hover:bg-white/20 text-gray-800' 
+                  : 'hover:bg-gray-100 text-gray-800'
+              }`}
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               返回首页
@@ -369,8 +407,8 @@ export function ProjectDetail({ project, onBack, onProjectClick }: ProjectDetail
                           // 收集所有流程步骤中的有效图片
                           const stepImages = project.processSteps
                             .map(s => s.image)
-                            .filter(img => img && img.trim() !== '');
-                          handleImageClick(step.image, stepImages);
+                            .filter((img): img is string => img !== null && img.trim() !== '');
+                          handleImageClick(step.image!, stepImages);
                         }}
                       />
                     </div>
@@ -390,7 +428,7 @@ export function ProjectDetail({ project, onBack, onProjectClick }: ProjectDetail
                 <Card key={index} className="shadow-sm hover:shadow-md">
                   <CardContent className="p-6 flex items-center h-full">
                     <div className="flex items-start space-x-4 w-full">
-                      <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-2xl">
+                      <div className="w-12 h-12 flex items-center justify-center text-2xl">
                         {feature.icon}
                       </div>
                       <div>

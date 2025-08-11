@@ -90,11 +90,11 @@ export const sigmaProjectImages = {
 
 // Bedrock设计中台项目详情图片
 export const bedrockDesignImages = {
-  componentIteration: '/images/projects/bedrock-design/component-iteration.png',
-  businessComponents: '/images/projects/bedrock-design/business-components.png',
-  experienceReview: '/images/projects/bedrock-design/experience-review.png',
-  richtextEditor: '/images/projects/bedrock-design/richtext-editor.png',
-  overview: '/images/projects/bedrock-design/overview.png',
+  componentIteration: '/images/projects/bedrock-design/1.png',
+  businessComponents: '/images/projects/bedrock-design/2.png',
+  experienceReview: '/images/projects/bedrock-design/3.png',
+  richtextEditor: '/images/projects/bedrock-design/4.png',
+  overview: '/images/projects/bedrock-design/1.png',
 };
 
 // Bedrock图标库项目详情图片
@@ -104,6 +104,7 @@ export const bedrockIconImages = {
   styleCharacteristics: '/images/projects/bedrock-icon/style-characteristics.png',
   sizeConsistency: '/images/projects/bedrock-icon/size-consistency.png',
   proportionConsistency: '/images/projects/bedrock-icon/proportion-consistency.png',
+  iconDisplay: '/images/projects/bedrock-icon/proportionConsistency.png',
   cornerRadiusConsistency: '/images/projects/bedrock-icon/corner-radius-consistency.png',
   strokeWeightConsistency: '/images/projects/bedrock-icon/stroke-weight-consistency.png',
   densitySpacingConsistency: '/images/projects/bedrock-icon/density-spacing-consistency.png',

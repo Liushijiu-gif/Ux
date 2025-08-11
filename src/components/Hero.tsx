@@ -96,7 +96,7 @@ export function Hero({ onResumeClick }: HeroProps) {
   return (
     <section 
       id="home" 
-      className="pt-20 pb-[104px] relative flex items-center justify-center overflow-hidden bg-gray-100"
+      className="pt-24 pb-[120px] relative flex items-center justify-center overflow-hidden bg-gray-100 min-h-screen"
     >
       {/* 弥散光圆形背景 */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -110,27 +110,28 @@ export function Hero({ onResumeClick }: HeroProps) {
         <div className="text-center">
           {/* Year Badge */}
           <FadeInElement delay={300}>
-            <div className="inline-flex items-center gap-2 mb-8 mt-[72px]">
-              <div className="w-3 h-3 rounded-full bg-blue-600"></div>
-              <span className="text-gray-600 text-sm font-medium">2024-2025</span>
+            <div className="mb-8 mt-[72px]">
+              <span className="text-gray-600 text-[20px] sm:text-lg md:text-xl lg:text-2xl font-medium">welcome to my world!</span>
             </div>
           </FadeInElement>
 
           {/* Main Title */}
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+          <h1 className="text-[34px] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-bold text-gray-900 mb-8 leading-[1.2] flex flex-col items-center font-cal">
             <FadeInElement delay={600}>
-              <span>Hey, I'm </span>
-              <span className="inline-flex items-center">
-                <img 
-                  src="/images/hero-image-1.png?v=5" 
-                  alt="设计师头像" 
-                  className="hidden sm:inline h-[1em] w-[1.5em] object-cover rounded-full shadow-md mr-2" 
-                />
-                <span className="text-blue-600 mx-2">6+0</span>
-              </span>
+              <div className="whitespace-nowrap flex justify-center w-full">
+                <span>Hey, I'm </span>
+                <span className="inline-flex items-center">
+                  <img 
+                    src="/images/hero-image-1.png?v=5" 
+                    alt="设计师头像" 
+                    className="hidden sm:inline h-[1em] w-[1.5em] object-cover rounded-full shadow-md mr-2" 
+                  />
+                  <span className="text-blue-600 mx-2">6+0</span>
+                </span>
+              </div>
             </FadeInElement>
             <FadeInElement delay={900}>
-              <div className="mt-2 whitespace-nowrap">
+              <div className="mt-4 whitespace-nowrap flex justify-center w-full">
                 <span className="inline-flex items-center">
                   <span>Design</span>
                   <img 
@@ -143,7 +144,7 @@ export function Hero({ onResumeClick }: HeroProps) {
               </div>
             </FadeInElement>
             <FadeInElement delay={1200}>
-              <div className="mt-2">
+              <div className="mt-4 whitespace-nowrap flex justify-center w-full">
                 <span className="inline-flex items-center">
                   <span className="mr-2">For </span>
                   <img 
@@ -159,17 +160,17 @@ export function Hero({ onResumeClick }: HeroProps) {
 
           {/* Description */}
           <FadeInElement delay={1500}>
-            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-16 max-w-3xl mx-auto leading-relaxed font-medium">
             我是一名充满好奇心和热情的用户体验设计师，致力于创造以用户为中心的解决方案， 探索并发现更多有意思的事物。
             </p>
           </FadeInElement>
 
           {/* CTA Buttons */}
-          <FadeInElement delay={1800} className="flex justify-center">
+          <FadeInElement delay={1800} className="flex justify-center mt-8">
             <Button 
               onClick={onResumeClick}
               size="lg"
-              className="bg-gray-900 hover:bg-gray-800 text-white px-4 sm:px-8 md:px-10 lg:px-12 py-2 sm:py-3 rounded-full text-sm sm:text-base md:text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 min-h-[44px] sm:min-h-[48px] md:min-h-[50px]"
+              className="bg-gray-900 hover:bg-gray-800 text-white px-6 sm:px-10 md:px-12 lg:px-16 py-3 sm:py-4 rounded-full text-base sm:text-lg md:text-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 min-h-[52px] sm:min-h-[56px] md:min-h-[60px]"
             >
               查看我的简历
             </Button>
